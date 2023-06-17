@@ -2,15 +2,9 @@ import scrapy
 from scrapy.http import Request
 
 
-class SpiderManager(scrapy.Spider):
+class RimSpider(scrapy.Spider):
     name = "rim"
-    allowed_domains = ["rim.org.ru"]
-    start_urls = ["https://rim.org.ru/"]
-
-    def parse(self, response):
-        categories = response.css('ul.navbar-nav > li > a::attr(href)').getall()
-        for category_url in categories:
-            yield Request(url=response.urljoin(category_url), callback=self.parse_category)
+    start_urls = ["https://rim.org.ru"]
 
     def parse_category(self, response):
         products = response.css('div.product-thumb')
